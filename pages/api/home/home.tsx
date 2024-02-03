@@ -91,6 +91,7 @@ const Home = ({
   // FIREBASE ----------------------------------------------
 
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [authCheckComplete, setAuthCheckComplete] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -101,6 +102,7 @@ const Home = ({
         setIsLoginModalOpen(false);
       } else {
         setUserId(null);
+        setIsLoginModalOpen(true);
 
         // Checking for email link
         if (isSignInWithEmailLink(auth, window.location.href)) {
@@ -116,6 +118,7 @@ const Home = ({
           }
         }
       }
+      setAuthCheckComplete(true);
     });
 
     return () => unsubscribe();

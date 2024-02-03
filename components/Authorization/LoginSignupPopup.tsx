@@ -179,10 +179,10 @@ const LoginSignupPopup: React.FC<Parameters> = ({ isOpen, onClose }) => {
                 ? 'Sign up with Email Link'
                 : 'Log in with Email Link'}
             </button>
-            {/*             <div className="mt-2 flex items-center justify-center text-center text-sm text-black dark:text-white">
+            <div className="mt-2 flex items-center justify-center text-center text-sm text-black dark:text-white">
               <IconAlertCircle size={18} className="mr-2" />
               No free messages with Email Link method.
-            </div> */}
+            </div>
           </div>
           {error && (
             <div className="flex items-center justify-center py-2 pb-2 text-center text-xs text-red-500">
