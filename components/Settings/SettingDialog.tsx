@@ -54,6 +54,9 @@ export const SettingDialog: FC<Props> = ({ open, onClose }) => {
     null,
   );
 
+  const [isFetchingcryptoPaymentStatus, setIsFetchingCryptoPaymentStatus] =
+    useState<boolean>(true);
+
   const app = initFirebaseApp();
   const auth = getAuth(app);
 
@@ -304,8 +307,8 @@ export const SettingDialog: FC<Props> = ({ open, onClose }) => {
   const getStatus = async () => {
     if (token) {
       const status = await getCryptoPaymentStatus(token);
-      console.log(status);
       setCryptoPaymentStatus(status);
+      setIsFetchingCryptoPaymentStatus(false);
     }
   };
 
@@ -474,21 +477,33 @@ export const SettingDialog: FC<Props> = ({ open, onClose }) => {
                         </option>
                       </select>
                     </div>
-                    {isPremium && isUserLoggedIn && !cryptoPaymentStatus && (
-                      <button
-                        type="button"
-                        className="mt-6 w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-black shadow hover:bg-hgpt-hover-white dark:bg-hgpt-dark-gray dark:text-white dark:hover:bg-hgpt-medium-gray"
-                        onClick={manageSubscription}
-                      >
-                        <span>Manage Subscription</span>
-                      </button>
-                    )}
-                    {cryptoPaymentStatus && isUserLoggedIn ? (
-                      <div className="mt-5">
-                        <b className="font-bold">Subscription: </b>{' '}
-                        <span>{cryptoPaymentStatus}</span>
+                    {isFetchingcryptoPaymentStatus ? (
+                      <div className="flex justify-center py-4">
+                        <ClipLoader size={30} color="white" />
                       </div>
-                    ) : null}
+                    ) : (
+                      <>
+                        {isPremium &&
+                          isUserLoggedIn &&
+                          !cryptoPaymentStatus && (
+                            <button
+                              type="button"
+                              className="mt-6 w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-black shadow hover:bg-hgpt-hover-white dark:bg-hgpt-dark-gray dark:text-white dark:hover:bg-hgpt-medium-gray"
+                              onClick={manageSubscription}
+                            >
+                              <span>Manage Subscription</span>
+                            </button>
+                          )}
+                        {cryptoPaymentStatus && isUserLoggedIn ? (
+                          <div className="mt-5">
+                            <b className="mb-2 text-sm font-bold text-black dark:text-neutral-200">
+                              Subscription
+                            </b>
+                            <p>{cryptoPaymentStatus}</p>
+                          </div>
+                        ) : null}
+                      </>
+                    )}
                     {isUserLoggedIn ? (
                       <>
                         <button

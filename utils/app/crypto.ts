@@ -25,19 +25,18 @@ export const getCryptoPaymentStatus = async (token: string) => {
     }
 
     if (data.ends_at) {
+      const date = new Date(data.ends_at).toLocaleDateString();
       if (data.status === 'expired') {
-        status += ` It expired on ${data.ends_at.split('T')[0]}`;
+        status += ` It expired on ${date}`;
       } else {
         if (data.status !== 'confirmation-pending') {
-          status += ` Your subscription will end on ${
-            data.ends_at.split('T')[0]
-          }`;
+          status += ` Your subscription will end on ${date}`;
         }
       }
     }
 
     return status;
   } else {
-    return JSON.stringify(data);
+    return ` There was an error fetching your payment status. Please reload the page or contact us. ${JSON.stringify(data)}`;
   }
 };
