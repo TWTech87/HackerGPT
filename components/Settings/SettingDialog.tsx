@@ -306,7 +306,7 @@ export const SettingDialog: FC<Props> = ({ open, onClose }) => {
 
   const getStatus = async () => {
     if (token) {
-      const status = await getCryptoPaymentStatus(token);
+      const status = (await getCryptoPaymentStatus(token)) || null;
       setCryptoPaymentStatus(status);
       setIsFetchingCryptoPaymentStatus(false);
     }
@@ -499,7 +499,9 @@ export const SettingDialog: FC<Props> = ({ open, onClose }) => {
                             <b className="mb-2 text-sm font-bold text-black dark:text-neutral-200">
                               Subscription
                             </b>
-                            <p>{cryptoPaymentStatus}</p>
+                            <p className="text-black dark:text-neutral-200">
+                              {cryptoPaymentStatus}
+                            </p>
                           </div>
                         ) : null}
                       </>

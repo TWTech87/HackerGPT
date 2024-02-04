@@ -12,8 +12,11 @@ export const getCryptoPaymentStatus = async (token: string) => {
 
   if (data.status) {
     if (data.status === 'trialing') {
-      status = 'You are currently on a free trial.';
+      return null;
     } else if (data.status === 'active') {
+      if (!data.ends_at) {
+        return null;
+      }
       status = 'Your subscription is active.';
     } else if (data.status === 'confirmation-pending') {
       status = 'Waiting for blockchain confirmation.';
