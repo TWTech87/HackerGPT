@@ -64,10 +64,6 @@ You can get in touch with us through email at [github@hackergpt.chat](mailto:git
 
 Interested in contributing to HackerGPT? Please see [CONTRIBUTING.md](https://github.com/Hacker-GPT/HackerGPT/blob/main/CONTRIBUTING.md) for setup instructions and guidelines for new contributors. As an added incentive, top contributors will have the opportunity to become part of the HackerGPT team.
 
-## Contributing Funds
-
-If you'd like to contribute financially to the development of HackerGPT, you can make a donation at the following link: [Donate to HackerGPT Development](https://donate.stripe.com/9AQeWn6UScl6dlm5ks).
-
 ## License
 
 Licensed under the [GNU General Public License v3.0](https://github.com/Hacker-GPT/HackerGPT/blob/main/LICENSE)
