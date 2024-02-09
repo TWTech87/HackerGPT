@@ -267,8 +267,13 @@ export const SettingDialog: FC<Props> = ({ open, onClose }) => {
       }
     };
 
-    getToken();
-    getStatus();
+    if(isPremium) {
+      getToken();
+      getStatus();  
+    } else {
+      setCryptoPaymentStatus(null);
+      setIsFetchingCryptoPaymentStatus(false);
+    }
 
     fetchKeysIfPremium();
   }, [selectedTab, isPremium]);
@@ -314,8 +319,13 @@ export const SettingDialog: FC<Props> = ({ open, onClose }) => {
 
   useEffect(() => {
     checkPremiumAndPortal();
-    getToken();
-    getStatus();
+    if(isPremium) {
+      getToken();
+      getStatus();
+    } else {
+      setCryptoPaymentStatus(null);
+      setIsFetchingCryptoPaymentStatus(false);
+    }
   }, [app, auth.currentUser?.uid, isUserLoggedIn]);
 
   const manageSubscription = () => {

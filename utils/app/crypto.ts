@@ -11,7 +11,7 @@ export const getCryptoPaymentStatus = async (token: string) => {
   let status = '';
 
   if (data.status) {
-    if (data.status === 'trialing') {
+    if (data.status === 'trialing' || data.status === 'none') {
       return null;
     } else if (data.status === 'active') {
       if (!data.ends_at) {
