@@ -52,7 +52,7 @@ export const HackerGPTStream = async (
     const PINECONE_QUERY_URL = `https://${process.env.SECRET_PINECONE_INDEX}-${process.env.SECRET_PINECONE_PROJECT_ID}.svc.${process.env.SECRET_PINECONE_ENVIRONMENT}.pinecone.io/query`;
 
     const requestBody = {
-      topK: 5,
+      topK: 4,
       vector: queryEmbedding,
       includeMetadata: true,
       namespace: `${process.env.SECRET_PINECONE_NAMESPACE}`,
@@ -72,40 +72,44 @@ export const HackerGPTStream = async (
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const data = await response.json();
-      const matches = data.matches || [];
+      const data = await response.json()
+    let matches = data.matches || []
 
-      const minimumContextCount = 3;
-      if (matches.length < minimumContextCount) {
-        return 'None';
+    if (matches.length < 3) {
+      return "None"
+    }
+
+    matches = matches.filter(
+      (match: { score: number; metadata: { text: string | any[] } }) =>
+        match.score > 0.82 && match.metadata.text.length >= 250
+    )
+
+    // Deduplicate matches based on their text content
+    const uniqueMatches = matches.reduce((acc: any[], current: { metadata: { text: string } }) => {
+      const textExists = acc.find(item => item.metadata.text === current.metadata.text);
+      if (!textExists) {
+        acc.push(current);
       }
+      return acc;
+    }, []);
 
-      const filteredMatches = matches.filter(
-        (match: { score: number }) => match.score > 0.82,
-      );
+    let formattedResults = uniqueMatches
+      .map(
+        (match: { metadata: { text: any } }, index: any) =>
+          `[CONTEXT ${index}]:\n${match.metadata.text}\n[END CONTEXT ${index}]\n\n`
+      )
+      .join("");
 
-      if (filteredMatches.length > 0) {
-        let formattedResults = filteredMatches
-          .map((match: { metadata: { text: string } }, index: any) => {
-            const contextText = match.metadata?.text || '';
-            return `[CONTEXT ${index}]:\n${contextText}\n[END CONTEXT ${index}]\n\n`;
-          })
-          .join('');
-
-        while (formattedResults.length > 7500) {
-          let lastContextIndex = formattedResults.lastIndexOf('[CONTEXT ');
-          if (lastContextIndex === -1) {
-            break;
-          }
-          formattedResults = formattedResults
-            .substring(0, lastContextIndex)
-            .trim();
-        }
-
-        return formattedResults || 'None';
-      } else {
-        return 'None';
+    // Ensure formattedResults does not exceed 7500 characters
+    while (formattedResults.length > 7500) {
+      let lastContextIndex = formattedResults.lastIndexOf('[CONTEXT ');
+      if (lastContextIndex === -1) {
+        break;
       }
+      formattedResults = formattedResults.substring(0, lastContextIndex).trim();
+    }
+
+    return formattedResults.length > 0 ? formattedResults : "None";
     } catch (error) {
       console.error(`Error querying Pinecone: ${error}`);
       return 'None';
