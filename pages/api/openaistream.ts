@@ -2,7 +2,10 @@ import { Message } from '@/types/chat';
 import { OpenAIModel } from '@/types/openai';
 import { ToolID } from '@/types/tool';
 
-import { replaceWordsInLastUserMessage, wordReplacements } from '@/utils/app/ai-helper'
+import {
+  replaceWordsInLastUserMessage,
+  wordReplacements,
+} from '@/utils/app/ai-helper';
 
 import {
   ParsedEvent,

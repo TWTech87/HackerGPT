@@ -7,10 +7,13 @@ import {
   createParser,
 } from 'eventsource-parser';
 
-import { cleanMessagesFromWarnings } from '@/utils/app/clean-messages'
-import { isEnglish, translateToEnglish } from "@/utils/app/language-utils"
-import preparePineconeQuery from '@/utils/app/prepare-pinecone-query'
-import { replaceWordsInLastUserMessage, wordReplacements } from '@/utils/app/ai-helper'
+import { cleanMessagesFromWarnings } from '@/utils/app/clean-messages';
+import { isEnglish, translateToEnglish } from '@/utils/app/language-utils';
+// import preparePineconeQuery from '@/utils/app/prepare-pinecone-query'
+import {
+  replaceWordsInLastUserMessage,
+  wordReplacements,
+} from '@/utils/app/ai-helper';
 
 import llmConfig from './config.content';
 
@@ -40,7 +43,7 @@ export const HackerGPTStream = async (
 
   const pineconeTemperature = 0.7;
 
-  const cleanedMessages = await cleanMessagesFromWarnings(messages)
+  const cleanedMessages = await cleanMessagesFromWarnings(messages);
 
   const queryPineconeVectorStore = async (question: string) => {
     const embeddingsInstance = new OpenAIEmbeddings({
@@ -72,44 +75,53 @@ export const HackerGPTStream = async (
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const data = await response.json()
-    let matches = data.matches || []
+      const data = await response.json();
+      let matches = data.matches || [];
 
-    if (matches.length < 3) {
-      return "None"
-    }
-
-    matches = matches.filter(
-      (match: { score: number; metadata: { text: string | any[] } }) =>
-        match.score > 0.82 && match.metadata.text.length >= 250
-    )
-
-    // Deduplicate matches based on their text content
-    const uniqueMatches = matches.reduce((acc: any[], current: { metadata: { text: string } }) => {
-      const textExists = acc.find(item => item.metadata.text === current.metadata.text);
-      if (!textExists) {
-        acc.push(current);
+      if (matches.length < 1) {
+        return 'None';
       }
-      return acc;
-    }, []);
 
-    let formattedResults = uniqueMatches
-      .map(
-        (match: { metadata: { text: any } }, index: any) =>
-          `[CONTEXT ${index}]:\n${match.metadata.text}\n[END CONTEXT ${index}]\n\n`
-      )
-      .join("");
+      matches = matches.filter(
+        (match: { score: number; metadata: { text: string | any[] } }) =>
+          match.score > 0.82 &&
+          match.metadata.text.length >= 250 &&
+          match.metadata.text.length <= 5000,
+      );
 
-    // Ensure formattedResults does not exceed 7500 characters
-    while (formattedResults.length > 7500) {
-      let lastContextIndex = formattedResults.lastIndexOf('[CONTEXT ');
-      if (lastContextIndex === -1) {
-        break;
+      // Deduplicate matches based on their text content
+      const uniqueMatches = matches.reduce(
+        (acc: any[], current: { metadata: { text: string } }) => {
+          const textExists = acc.find(
+            (item) => item.metadata.text === current.metadata.text,
+          );
+          if (!textExists) {
+            acc.push(current);
+          }
+          return acc;
+        },
+        [],
+      );
+
+      let formattedResults = uniqueMatches
+        .map(
+          (match: { metadata: { text: any } }, index: any) =>
+            `[CONTEXT ${index}]:\n${match.metadata.text}\n[END CONTEXT ${index}]\n\n`,
+        )
+        .join('');
+
+      // Ensure formattedResults does not exceed 7500 characters
+      while (formattedResults.length > 7500) {
+        let lastContextIndex = formattedResults.lastIndexOf('[CONTEXT ');
+        if (lastContextIndex === -1) {
+          break;
+        }
+        formattedResults = formattedResults
+          .substring(0, lastContextIndex)
+          .trim();
       }
-      formattedResults = formattedResults.substring(0, lastContextIndex).trim();
-    }
 
-    return formattedResults.length > 0 ? formattedResults : "None";
+      return formattedResults.length > 0 ? formattedResults : 'None';
     } catch (error) {
       console.error(`Error querying Pinecone: ${error}`);
       return 'None';
@@ -117,43 +129,40 @@ export const HackerGPTStream = async (
   };
 
   let systemMessage: Message = {
-    role: "system",
-    content: `${llmConfig.systemPrompts.hackerGPT}`
-  }
+    role: 'system',
+    content: `${llmConfig.systemPrompts.hackerGPT}`,
+  };
 
   if (
     isEnhancedSearchActive &&
     llmConfig.usePinecone &&
     cleanedMessages.length > 0 &&
-    cleanedMessages[cleanedMessages.length - 1].role === "user" &&
+    cleanedMessages[cleanedMessages.length - 1].role === 'user' &&
     cleanedMessages[cleanedMessages.length - 1].content.length >
-    llmConfig.pinecone.messageLength.min
-    ) {
-      let combinedContent = preparePineconeQuery(
-        cleanedMessages,
-        llmConfig.pinecone.messageLength.max
-      )
+      llmConfig.pinecone.messageLength.min
+  ) {
+    let latestUserMessage = cleanedMessages[cleanedMessages.length - 1].content;
 
-      if (!(await isEnglish(combinedContent))) {
-        combinedContent = await translateToEnglish(
-          combinedContent,
-          openRouterUrl,
-          openRouterHeaders,
-          llmConfig.models.translation
-        )
-      }
+    if (!(await isEnglish(latestUserMessage))) {
+      latestUserMessage = await translateToEnglish(
+        latestUserMessage,
+        openRouterUrl,
+        openRouterHeaders,
+        llmConfig.models.translation,
+      );
+    }
 
     const pineconeResults = await queryPineconeVectorStore(
-      combinedContent.trim(),
+      latestUserMessage.trim(),
     );
 
-    if (pineconeResults !== "None") {
-      modelTemperature = pineconeTemperature
+    if (pineconeResults !== 'None') {
+      modelTemperature = pineconeTemperature;
 
       systemMessage.content =
         `${llmConfig.systemPrompts.hackerGPT} ` +
         `${llmConfig.systemPrompts.pinecone} ` +
-        `Context:\n ${pineconeResults}`
+        `RAG Context:\n ${pineconeResults}`;
     }
   }
 
@@ -163,21 +172,21 @@ export const HackerGPTStream = async (
 
   replaceWordsInLastUserMessage(messages, wordReplacements);
 
-    const model1 = llmConfig.models.default
-    const model2 = llmConfig.models.hackerGPT
-    const selectedModel = Math.random() < 0.80 ? model1 : model2
-
-    const requestBody = {
-      model: selectedModel,
-      route: "fallback",
-      messages: cleanedMessages.map(msg => ({
-        role: msg.role,
-        content: msg.content
-      })),
-      temperature: modelTemperature,
-      max_tokens: maxTokens,
-      stream: enableStream
-    }
+  const model1 = llmConfig.models.default;
+  const model2 = llmConfig.models.hackerGPT;
+  const selectedModel = Math.random() < 0.8 ? model1 : model2;
+  console.log(cleanedMessages);
+  const requestBody = {
+    model: selectedModel,
+    route: 'fallback',
+    messages: cleanedMessages.map((msg) => ({
+      role: msg.role,
+      content: msg.content,
+    })),
+    temperature: modelTemperature,
+    max_tokens: maxTokens,
+    stream: enableStream,
+  };
 
   try {
     const res = await fetch(openRouterUrl, {
