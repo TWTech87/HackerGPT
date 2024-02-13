@@ -175,7 +175,7 @@ export const HackerGPTStream = async (
   const model1 = llmConfig.models.default;
   const model2 = llmConfig.models.hackerGPT;
   const selectedModel = Math.random() < 0.8 ? model1 : model2;
-  console.log(cleanedMessages);
+
   const requestBody = {
     model: selectedModel,
     route: 'fallback',
