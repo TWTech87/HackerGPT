@@ -64,18 +64,17 @@ export const SettingDialog: FC<Props> = ({ open, onClose }) => {
       name: 'General',
       icon: <IconSettings size={22} strokeWidth={2} />,
       isProtected: false,
-    }
+    },
   ];
 
   const [selectedTab, setSelectedTab] = useState(tabs[0].name);
 
-
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    if(isPremium) {
+    if (isPremium) {
       getToken();
-      getStatus();  
+      getStatus();
     } else {
       setCryptoPaymentStatus(null);
       setIsFetchingCryptoPaymentStatus(false);
@@ -117,7 +116,7 @@ export const SettingDialog: FC<Props> = ({ open, onClose }) => {
 
   useEffect(() => {
     checkPremiumAndPortal();
-    if(isPremium) {
+    if (isPremium) {
       getToken();
       getStatus();
     } else {
@@ -284,7 +283,8 @@ export const SettingDialog: FC<Props> = ({ open, onClose }) => {
                             </p>
                           </div>
                         ) : null}
-                      </>)}
+                      </>
+                    )}
                     {isUserLoggedIn ? (
                       <>
                         <button

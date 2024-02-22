@@ -254,13 +254,12 @@ const UpgradeToPremiumPopup: React.FC<Props> = ({
                           </div>
                           <div className="text-container">
                             <p>
-                              Access to additional tools like Subfinder, Katana,
-                              Web Browsing and more
+                              Access to additional tools like Nuclei, Katana,
+                              HttpX and more
                             </p>
                           </div>
                         </div>
-                        <div className="mb-2 flex items-center">
-                        </div>
+                        <div className="mb-2 flex items-center"></div>
                         <div className="mb-2 flex items-center">
                           <div className="icon-container mr-2">
                             <IconCircleCheck
