@@ -130,7 +130,7 @@ export const HackerGPTStream = async (
 
   let systemMessage: Message = {
     role: 'system',
-    content: `${llmConfig.systemPrompts.hackerGPT}`,
+    content: `[INST] ${llmConfig.systemPrompts.hackerGPT} [/INST]`,
   };
 
   if (
@@ -160,9 +160,9 @@ export const HackerGPTStream = async (
       modelTemperature = pineconeTemperature;
 
       systemMessage.content =
-        `${llmConfig.systemPrompts.hackerGPT} ` +
+        `[INST] ${llmConfig.systemPrompts.hackerGPT} ` +
         `${llmConfig.systemPrompts.pinecone} ` +
-        `RAG Context:\n ${pineconeResults}`;
+        `RAG Context:\n ${pineconeResults} [/INST]`;
     }
   }
 
@@ -172,8 +172,8 @@ export const HackerGPTStream = async (
 
   replaceWordsInLastUserMessage(messages, wordReplacements);
 
-  const model1 = llmConfig.models.default;
-  const model2 = llmConfig.models.hackerGPT;
+  const model1 = llmConfig.models.hackerGPT_default;
+  const model2 = llmConfig.models.hackerGPT_enhance;
   const selectedModel = Math.random() < 0.8 ? model1 : model2;
 
   const requestBody = {

@@ -38,8 +38,6 @@ export const OpenAIStream = async (
   const GOOGLE_SEARCH_SYSTEM_PROMPT =
     process.env.SECRET_OPENAI_GOOGLE_SEARCH_SYSTEM_PROMPT;
   const OPENAI_API_KEY = process.env.SECRET_OPENAI_API_KEY;
-  const HACKERGPT_MODEL = process.env.SECRET_HACKERGPT_MODEL;
-
   const openAIUrl = `https://api.openai.com/v1/chat/completions`;
 
   replaceWordsInLastUserMessage(messages, wordReplacements);
@@ -79,11 +77,6 @@ export const OpenAIStream = async (
     (toolId && toolId.length > 0)
   ) {
     commonBody.model = `gpt-3.5-turbo-0125`;
-    if (answerMessage.content.trim()) {
-      commonBody['messages'].push(answerMessage);
-    }
-  } else if (model === 'gpt-3.5-turbo-instruct') {
-    commonBody.model = `${HACKERGPT_MODEL}`;
     if (answerMessage.content.trim()) {
       commonBody['messages'].push(answerMessage);
     }

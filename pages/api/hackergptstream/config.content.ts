@@ -2,7 +2,7 @@ const llmConfig = {
   pinecone: {
     temperature: 0.7,
     messageLength: {
-      min: parseInt(process.env.MIN_LAST_MESSAGE_LENGTH || '40', 10),
+      min: parseInt(process.env.MIN_LAST_MESSAGE_LENGTH || '50', 10),
       max: parseInt(process.env.MAX_LAST_MESSAGE_LENGTH || '1000', 10),
     },
   },
@@ -12,8 +12,8 @@ const llmConfig = {
   },
   models: {
     translation: process.env.OPENROUTER_TRANSLATION_MODEL,
-    default: 'nousresearch/nous-hermes-2-mixtral-8x7b-dpo',
-    hackerGPT: process.env.HACKERGPT_OPENROUTER_MODEL,
+    hackerGPT_default: process.env.OPENROUTER_HACKERGPT_DEFUALT_MODEL,
+    hackerGPT_enhance: process.env.OPENROUTER_HACKERGPT_ENHANCE_MODEL,
   },
   usePinecone: process.env.USE_PINECONE === 'TRUE',
 };
