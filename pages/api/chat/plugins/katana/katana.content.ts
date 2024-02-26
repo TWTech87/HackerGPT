@@ -427,10 +427,12 @@ export async function handleKatanaRequest(
   }
 
   const toolId = 'katana';
-  const rateLimitCheck = await checkToolRateLimit(authToken, toolId);
+  if (authToken !== process.env.SECRET_AUTH_PLUGINS_HACKERGPT_V2) {
+    const rateLimitCheck = await checkToolRateLimit(authToken, toolId);
 
-  if (rateLimitCheck.isRateLimited) {
-    return rateLimitCheck.response;
+    if (rateLimitCheck.isRateLimited) {
+      return rateLimitCheck.response;
+    }
   }
 
   let katanaUrl = `${process.env.SECRET_GKE_PLUGINS_BASE_URL}/api/chat/plugins/katana`;

@@ -855,10 +855,12 @@ export async function handleNucleiRequest(
   }
 
   const toolId = 'nuclei';
-  const rateLimitCheck = await checkToolRateLimit(authToken, toolId);
+  if (authToken !== process.env.SECRET_AUTH_PLUGINS_HACKERGPT_V2) {
+    const rateLimitCheck = await checkToolRateLimit(authToken, toolId);
 
-  if (rateLimitCheck.isRateLimited) {
-    return rateLimitCheck.response;
+    if (rateLimitCheck.isRateLimited) {
+      return rateLimitCheck.response;
+    }
   }
 
   let nucleiUrl = `${process.env.SECRET_GKE_PLUGINS_BASE_URL}/api/chat/plugins/nuclei`;

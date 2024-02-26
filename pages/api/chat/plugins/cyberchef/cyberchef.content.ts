@@ -222,10 +222,12 @@ export async function handleCyberChefRequest(
   }
 
   const toolId = 'cyberchef';
-  const rateLimitCheck = await checkToolRateLimit(authToken, toolId);
+  if (authToken !== process.env.SECRET_AUTH_PLUGINS_HACKERGPT_V2) {
+    const rateLimitCheck = await checkToolRateLimit(authToken, toolId);
 
-  if (rateLimitCheck.isRateLimited) {
-    return rateLimitCheck.response;
+    if (rateLimitCheck.isRateLimited) {
+      return rateLimitCheck.response;
+    }
   }
 
   let cyberchefUrl = `${process.env.SECRET_CYBERCHEF_BASE_URL}`;
