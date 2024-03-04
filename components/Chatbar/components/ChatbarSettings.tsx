@@ -6,6 +6,7 @@ import {
   IconLockOpen,
   IconInfoCircle,
   IconBrandGithub,
+  IconExternalLink,
 } from '@tabler/icons-react';
 
 import { useState, useContext } from 'react';
@@ -66,6 +67,11 @@ export const ChatbarSettings = () => {
         <ClearConversations onClearConversations={handleClearConversations} />
       ) : null}
       <div className="flex flex-col items-center space-y-1 border-t border-white/20 pt-1 text-sm">
+        <SidebarButton
+          text={t('Try HackerGPT v2 Now!')}
+          icon={<IconExternalLink size={18} />}
+          onClick={() => window.open('https://chat.hackerai.co', '_blank')}
+        />
         {displayIdentifier ? (
           <>
             {user && !isPremium && !loading && (

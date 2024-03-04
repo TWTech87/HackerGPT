@@ -61,7 +61,7 @@ const handler = async (req: Request): Promise<Response> => {
         headers: corsHeaders,
       });
     }
-    
+
     let { messages, model, max_tokens, temperature, stream, toolId } =
       (await req.json()) as ChatBody;
 
