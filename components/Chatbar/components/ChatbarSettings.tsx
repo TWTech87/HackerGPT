@@ -76,7 +76,7 @@ export const ChatbarSettings = () => {
           <>
             {user && !isPremium && !loading && (
               <SidebarButton
-                text={t('Upgrade to Plus')}
+                text={t('Upgrade to Pro')}
                 icon={<IconLockOpen size={18} />}
                 onClick={handleUpgradePopupOpen}
               />

@@ -56,7 +56,7 @@ const SearchToggle = () => {
     }
 
     if (!isPremium) {
-      alert(t('The "Search Web" feature is available only for Plus users.'));
+      alert(t('The "Search Web" feature is available only for Pro users.'));
       return;
     }
 

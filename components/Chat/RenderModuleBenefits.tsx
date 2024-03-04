@@ -27,8 +27,8 @@ export function RenderModuleBenefits(props: { moduleName: string | null }) {
       benefits = {
         title: 'AI + Hacker Wisdom: Unbeatable Combo',
         feature: 'Constantly updated with fresh hacker knowledge',
-        description: 'Available to Free and Plus users',
-        extra: 'Unlimited to Plus users',
+        description: 'Available to Free and Pro users',
+        extra: 'Unlimited to Pro users',
         beta: true,
       };
       break;
@@ -36,9 +36,9 @@ export function RenderModuleBenefits(props: { moduleName: string | null }) {
       benefits = {
         title: "Hacker's Dream AI",
         feature: 'Ready for complex challenges',
-        description: 'Available exclusively to Plus users',
+        description: 'Available exclusively to Pro users',
         extra: 'Limit 40 messages / 3 hours',
-        buttonText: 'Upgrade to Plus',
+        buttonText: 'Upgrade to Pro',
       };
       break;
     default:
