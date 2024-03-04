@@ -436,7 +436,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
                 {model && (
                   <>
                     {model.name === 'HackerGPT' ? (
-                      <IconBrandOpenai size={20} />
+                      <HackerGPTSVG scale={0.1} />
                     ) : model.name === 'Web Browsing (GPT-4)' ? (
                       <IconWorld size={20} />
                     ) : (

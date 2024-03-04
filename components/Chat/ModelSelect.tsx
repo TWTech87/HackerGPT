@@ -10,6 +10,7 @@ import { usePluginContext } from '@/hooks/PluginProvider';
 
 import PluginStoreModal from '@/components/EnhancedMenu/PluginStore';
 import { availablePlugins } from '@/components/EnhancedMenu/PluginStore';
+import { HackerGPTSVG } from './hackergpt-svg';
 
 export const ModelSelect = () => {
   const { t } = useTranslation('chat');
@@ -174,7 +175,7 @@ export const ModelSelect = () => {
                   <div className="group/button relative flex w-full items-center justify-center gap-1 rounded-lg py-3 outline-none transition-opacity duration-100 sm:w-auto sm:min-w-[150px] md:gap-2 md:py-3">
                     {model.name === 'HackerGPT' ? (
                       <div className="pl-2">
-                        <IconBrandOpenai size={20} />
+                        <HackerGPTSVG scale={0.1} />
                       </div>
                     ) : (
                       <div className="pl-2">
