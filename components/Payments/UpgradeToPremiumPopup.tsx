@@ -44,18 +44,18 @@ const UpgradeToPremiumPopup: React.FC<Props> = ({
     }
   };
 
-  const getStatus = async () => {
-    if (token) {
-      const status = await getCryptoPaymentStatus(token);
-      console.log(status);
-      setCryptoStatus(status);
-    }
-  };
+  // const getStatus = async () => {
+  //   if (token) {
+  //     const status = await getCryptoPaymentStatus(token);
+  //     console.log(status);
+  //     setCryptoStatus(status);
+  //   }
+  // };
 
   useEffect(() => {
     getToken();
-    getStatus();
-    fetchCryptoCharge();
+    // getStatus();
+    // fetchCryptoCharge();
   }, [isOpen]);
 
   const upgradeToPremium = () => {
@@ -64,40 +64,40 @@ const UpgradeToPremiumPopup: React.FC<Props> = ({
     }
   };
 
-  const fetchCryptoCharge = async () => {
-    if (!token) {
-      return;
-    }
+  // const fetchCryptoCharge = async () => {
+  //   if (!token) {
+  //     return;
+  //   }
 
-    const coinbaseChargeUrl = process.env.NEXT_PUBLIC_COINBASE_CHARGE_URL;
+  //   const coinbaseChargeUrl = process.env.NEXT_PUBLIC_COINBASE_CHARGE_URL;
 
-    if (!coinbaseChargeUrl) {
-      throw new Error('Missing Coinbase Charge Url environment variable');
-    }
+  //   if (!coinbaseChargeUrl) {
+  //     throw new Error('Missing Coinbase Charge Url environment variable');
+  //   }
 
-    const res = await fetch(coinbaseChargeUrl, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const data = await res.json();
+  //   const res = await fetch(coinbaseChargeUrl, {
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   });
+  //   const data = await res.json();
 
-    const { hosted_url } = data;
+  //   const { hosted_url } = data;
 
-    setCryptoCharge(hosted_url);
-  };
+  //   setCryptoCharge(hosted_url);
+  // };
 
-  const payWithCrypto = () => {
-    if (
-      cryptoCharge &&
-      cryptoCharge.startsWith('https://commerce.coinbase.com/pay')
-    ) {
-      window.open(cryptoCharge, '_blank');
-    } else {
-      setCryptoError('Error creating payment link');
-    }
-  };
+  // const payWithCrypto = () => {
+  //   if (
+  //     cryptoCharge &&
+  //     cryptoCharge.startsWith('https://commerce.coinbase.com/pay')
+  //   ) {
+  //     window.open(cryptoCharge, '_blank');
+  //   } else {
+  //     setCryptoError('Error creating payment link');
+  //   }
+  // };
 
   return (
     <>
@@ -123,7 +123,7 @@ const UpgradeToPremiumPopup: React.FC<Props> = ({
                     </div>
                     <div className="flex items-center justify-between text-white">
                       <div className="text-md pb-4 font-bold">
-                        Your Plan {cryptoStatus && ': ' + cryptoStatus}
+                        Upgrade your plan {cryptoStatus && ': ' + cryptoStatus}
                       </div>
                     </div>
 
@@ -131,7 +131,7 @@ const UpgradeToPremiumPopup: React.FC<Props> = ({
                     <div className="flex flex-col text-white sm:flex-row">
                       {/* User Plan */}
                       <div className="mb-4 flex-1 rounded-lg bg-hgpt-dark-gray sm:mb-0">
-                        <h3 className="mb-2 text-lg font-bold">Free plan</h3>
+                        <h3 className="mb-2 text-lg font-bold">Free</h3>
                         <button
                           className="mb-4 w-full rounded bg-[#8e8ea0] px-4 py-2 text-hgpt-dark-gray"
                           disabled
@@ -184,11 +184,9 @@ const UpgradeToPremiumPopup: React.FC<Props> = ({
                       {/* Premium Plan */}
                       <div className="mb-4 flex-1 rounded-lg bg-hgpt-dark-gray sm:mb-0">
                         <div className="flex items-center justify-between">
-                          <h3 className="mb-2 text-lg font-bold">
-                            HackerGPT Plus
-                          </h3>
+                          <h3 className="mb-2 text-lg font-bold">Pro</h3>
                           <div className="mb-2 text-lg text-[#8e8ea0]">
-                            USD $20/mo
+                            USD $20/month
                           </div>
                         </div>
                         <div className="flex flex-col gap-0 md:flex-row md:gap-2">
@@ -201,9 +199,9 @@ const UpgradeToPremiumPopup: React.FC<Props> = ({
                               size={22}
                               strokeWidth={2}
                             />
-                            Upgrade to Plus
+                            Upgrade to Pro
                           </button>
-                          <button
+                          {/* <button
                             onClick={payWithCrypto}
                             className="mb-4 flex w-full flex-row items-center justify-center gap-y-3 rounded bg-orange-600 px-4 py-2 text-sm font-bold text-white transition duration-200 hover:bg-orange-700"
                           >
@@ -213,7 +211,7 @@ const UpgradeToPremiumPopup: React.FC<Props> = ({
                               strokeWidth={2}
                             />
                             Pay with Crypto
-                          </button>
+                          </button> */}
                         </div>
                         {cryptoError && (
                           <div className="mb-2 text-red-500">{cryptoError}</div>
