@@ -20,7 +20,7 @@ const SearchToggle = () => {
 
   useEffect(() => {
     if (
-      selectedConversation?.model.id !== OpenAIModelID.GPT_4 &&
+      selectedConversation?.model.id !== OpenAIModelID.HackerGPT_PRO &&
       selectedToolId === SEARCH_TOOL_ID
     ) {
       setIsEnabled(false);
@@ -60,9 +60,11 @@ const SearchToggle = () => {
       return;
     }
 
-    if (selectedConversation?.model.id !== OpenAIModelID.GPT_4) {
+    if (selectedConversation?.model.id !== OpenAIModelID.HackerGPT_PRO) {
       alert(
-        t('The "Search Web" feature is only available with the GPT-4 model.'),
+        t(
+          'The "Search Web" feature is only available with the HackerGPT Pro model.',
+        ),
       );
       return;
     }

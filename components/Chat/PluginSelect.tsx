@@ -39,7 +39,8 @@ export const PluginSelect = () => {
 
   const handleModuleClick = (modelName: string) => {
     if (
-      (modelName === 'GPT-4' || modelName === 'Web Browsing (GPT-4)') &&
+      (modelName === 'HackerGPT Pro' ||
+        modelName === 'Web Browsing (HackerGPT Pro)') &&
       !isPremium
     ) {
       return;
@@ -74,12 +75,12 @@ export const PluginSelect = () => {
         >
           {models
             .sort((a, b) => {
-              if (a.name === 'Web Browsing (GPT-4') return 1;
-              if (b.name === 'Web Browsing (GPT-4') return -1;
+              if (a.name === 'Web Browsing (HackerGPT Pro') return 1;
+              if (b.name === 'Web Browsing (HackerGPT Pro') return -1;
               if (a.name === 'HackerGPT') return -1;
               if (b.name === 'HackerGPT') return 1;
-              if (a.name === 'GPT-4') return -1;
-              if (b.name === 'GPT-4') return 1;
+              if (a.name === 'HackerGPT Pro') return -1;
+              if (b.name === 'HackerGPT Pro') return 1;
               return a.name.localeCompare(b.name);
             })
             .map((model) => (
@@ -87,8 +88,8 @@ export const PluginSelect = () => {
                 key={model.id}
                 value={model.id}
                 disabled={
-                  (model.name === 'GPT-4' ||
-                    model.name === 'Web Browsing (GPT-4)') &&
+                  (model.name === 'HackerGPT Pro' ||
+                    model.name === 'Web Browsing (HackerGPT Pro)') &&
                   !isPremium
                 }
                 className={`dark:bg-hgpt-medium-gray dark:text-white ${

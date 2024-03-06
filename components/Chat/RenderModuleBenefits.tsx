@@ -32,7 +32,7 @@ export function RenderModuleBenefits(props: { moduleName: string | null }) {
         beta: true,
       };
       break;
-    case 'GPT-4':
+    case 'HackerGPT Pro':
       benefits = {
         title: "Hacker's Dream AI",
         feature: 'Ready for complex challenges',

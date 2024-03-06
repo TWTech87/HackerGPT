@@ -62,7 +62,7 @@ const EnhancedMenu = forwardRef<HTMLDivElement, EnhancedMenuProps>(
         }}
       >
         <div className="relative flex w-full flex-col px-4 py-2">
-          {selectedConversation?.model.id !== OpenAIModelID.GPT_4 && (
+          {selectedConversation?.model.id !== OpenAIModelID.HackerGPT_PRO && (
             <div className="mobile:!flex-col mb-2 flex w-full flex-row items-center justify-start gap-4 border-b pb-2.5 dark:border-gray-900/50">
               <EnhancedSearchToggle />
             </div>

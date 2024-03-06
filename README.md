@@ -7,7 +7,7 @@ HackerGPT is your indispensable digital companion in the world of hacking. Craft
 When you ask a question, it's sent to our server. We verify user authenticity and manage your question quota based on whether you're a free or plus user. We then search our database for information that closely matches your question. For questions not in English, we translate them to find relevant information from our database. If a strong match is found, it's incorporated into the AI's response process. Your question is then securely passed to OpenAI or OpenRouter for processing, with no personal information sent. Responses vary based on the module:
 
 - **HackerGPT**: A tuned version of Mixtral 8x7B with semantic search on our data.
-- **GPT-4 Turbo**: The latest and greatest from OpenAI, paired with our unique prompt.
+- **HackerGPT Pro**: The latest and greatest from Mistral AI, paired with our unique prompt.
 
 ## What Makes HackerGPT Special?
 

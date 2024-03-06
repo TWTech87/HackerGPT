@@ -35,12 +35,12 @@ const AboutUs = () => {
             </p>
             <ul className="ml-8 list-disc space-y-2">
               <li>
-                HackerGPT: A tuned version of gpt-3.5-turbo-1106 with semantic
-                search on our data.
+                HackerGPT: A tuned version of Mixtral 8X7B with semantic search
+                on our data.
               </li>
               <li>
-                GPT-4 Turbo: The latest and greatest from OpenAI, paired with
-                our unique prompt.
+                HackerGPT Pro: The latest and greatest from Mistral AI, paired
+                with our unique prompt.
               </li>
             </ul>
           </div>

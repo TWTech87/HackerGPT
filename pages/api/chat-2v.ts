@@ -1,6 +1,6 @@
 import { OpenAIError, OpenAIStream } from '@/pages/api/openaistream';
 import { ChatBody, Message } from '@/types/chat';
-import { ToolID } from '@/types/tool';
+// import { ToolID } from '@/types/tool';
 
 // @ts-expect-error
 import wasm from '../../node_modules/@dqbd/tiktoken/lite/tiktoken_bg.wasm?module';
@@ -8,11 +8,11 @@ import wasm from '../../node_modules/@dqbd/tiktoken/lite/tiktoken_bg.wasm?module
 import tiktokenModel from '@dqbd/tiktoken/encoders/cl100k_base.json';
 import { Tiktoken, init } from '@dqbd/tiktoken/lite/init';
 
-import {
-  fetchGoogleSearchResults,
-  processGoogleResults,
-  createAnswerPromptGoogle,
-} from '@/pages/api/chat/plugins/googlesearch';
+// import {
+//   fetchGoogleSearchResults,
+//   processGoogleResults,
+//   createAnswerPromptGoogle,
+// } from '@/pages/api/chat/plugins/googlesearch';
 
 import {
   toolUrls,
@@ -51,7 +51,7 @@ const getTokenLimit = (model: string) => {
 
 const handler = async (req: Request): Promise<Response> => {
   try {
-    const useWebBrowsingPlugin = process.env.USE_WEB_BROWSING_PLUGIN === 'TRUE';
+    // const useWebBrowsingPlugin = process.env.USE_WEB_BROWSING_PLUGIN === 'TRUE';
 
     const authToken = req.headers.get('Authorization');
 
@@ -145,9 +145,9 @@ const handler = async (req: Request): Promise<Response> => {
       }
     }
 
-    if (toolId === ToolID.WEBSEARCH && lastMessage.role === 'user') {
-      messagesToSend.pop();
-    }
+    // if (toolId === ToolID.WEBSEARCH && lastMessage.role === 'user') {
+    //   messagesToSend.pop();
+    // }
 
     const skipFirebaseStatusCheck = 'TRUE';
 
@@ -176,25 +176,25 @@ const handler = async (req: Request): Promise<Response> => {
       }
     }
 
-    if (userStatusOk && toolId === ToolID.WEBSEARCH) {
-      if (!useWebBrowsingPlugin) {
-        return new Response(
-          'The Web Browsing Plugin is disabled. To enable it, please configure the necessary environment variables.',
-          { status: 200, headers: corsHeaders },
-        );
-      }
+    // if (userStatusOk && toolId === ToolID.WEBSEARCH) {
+    //   if (!useWebBrowsingPlugin) {
+    //     return new Response(
+    //       'The Web Browsing Plugin is disabled. To enable it, please configure the necessary environment variables.',
+    //       { status: 200, headers: corsHeaders },
+    //     );
+    //   }
 
-      const query = lastMessage.content.trim();
-      const googleData = await fetchGoogleSearchResults(query);
-      const sourceTexts = await processGoogleResults(
-        googleData,
-        tokenLimit,
-        tokenCount,
-      );
+    //   const query = lastMessage.content.trim();
+    //   const googleData = await fetchGoogleSearchResults(query);
+    //   const sourceTexts = await processGoogleResults(
+    //     googleData,
+    //     tokenLimit,
+    //     tokenCount,
+    //   );
 
-      const answerPrompt = createAnswerPromptGoogle(query, sourceTexts);
-      answerMessage.content = answerPrompt;
-    }
+    //   const answerPrompt = createAnswerPromptGoogle(query, sourceTexts);
+    //   answerMessage.content = answerPrompt;
+    // }
 
     encoding.free();
 
@@ -221,7 +221,7 @@ const handler = async (req: Request): Promise<Response> => {
             ) {
               const toolUrl = toolUrls[tool];
               return new Response(
-                `You can access [${tool}](${toolUrl}) only with GPT-4.`,
+                `You can access [${tool}](${toolUrl}) only with HackerGPT Pro.`,
                 { status: 200, headers: corsHeaders },
               );
             }

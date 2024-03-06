@@ -17,7 +17,10 @@ const EnhancedSearchToggle = () => {
   const ENHANCED_SEARCH_TOOL_ID = ToolID.ENHANCEDSEARCH;
 
   useEffect(() => {
-    if (isEnabled && selectedConversation?.model.id !== OpenAIModelID.GPT_4) {
+    if (
+      isEnabled &&
+      selectedConversation?.model.id !== OpenAIModelID.HackerGPT_PRO
+    ) {
       if (selectedToolId !== ENHANCED_SEARCH_TOOL_ID) {
         homeDispatch({
           type: 'SET_SELECTED_TOOL_ID',

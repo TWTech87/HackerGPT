@@ -17,7 +17,7 @@ import {
 
 import llmConfig from './config.content';
 
-class APIError extends Error {
+export class APIError extends Error {
   code: any;
   constructor(message: string | undefined, code: any) {
     super(message);

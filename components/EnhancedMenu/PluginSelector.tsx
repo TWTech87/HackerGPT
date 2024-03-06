@@ -73,9 +73,9 @@ const PluginSelector = () => {
       toolId !== ToolID.GAU &&
       toolId !== ToolID.CYBERCHEF &&
       toolId !== 'plugins_store' &&
-      selectedConversation?.model.id !== OpenAIModelID.GPT_4
+      selectedConversation?.model.id !== OpenAIModelID.HackerGPT_PRO
     ) {
-      alert(t('This plugin is only available with the GPT-4 model.'));
+      alert(t('This plugin is only available with the HackerGPT Pro model.'));
       return;
     }
 

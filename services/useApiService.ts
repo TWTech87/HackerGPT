@@ -18,7 +18,7 @@ const useApiService = () => {
       },
       {
         id: 'gpt-4',
-        name: 'GPT-4',
+        name: 'HackerGPT Pro',
       },
     ]);
   }, []);

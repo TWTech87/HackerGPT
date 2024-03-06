@@ -224,10 +224,8 @@ const UpgradeToPremiumPopup: React.FC<Props> = ({
                               strokeWidth={2}
                             />
                           </div>
-                          <div className="text-container flex-1">
-                            <p className="overflow-hidden truncate whitespace-nowrap">
-                              Unlimited access to our HackerGPT model
-                            </p>
+                          <div className="text-container">
+                            <p>Access to our HackerGPT Pro model</p>
                           </div>
                         </div>
                         <div className="mb-2 flex items-center">
@@ -238,8 +236,10 @@ const UpgradeToPremiumPopup: React.FC<Props> = ({
                               strokeWidth={2}
                             />
                           </div>
-                          <div className="text-container">
-                            <p>Access to GPT-4 Turbo model</p>
+                          <div className="text-container flex-1">
+                            <p className="overflow-hidden truncate whitespace-nowrap">
+                              Unlimited access to our HackerGPT model
+                            </p>
                           </div>
                         </div>
                         <div className="mb-2 flex items-center">
