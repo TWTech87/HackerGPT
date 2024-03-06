@@ -1,5 +1,5 @@
 import { Message } from '@/types/chat';
-import { APIError } from "./hackergptstream/index"
+import { APIError } from './hackergptstream/index';
 
 import {
   replaceWordsInLastUserMessage,
@@ -15,10 +15,7 @@ import {
 import { cleanMessagesFromWarnings } from '@/utils/app/clean-messages';
 import llmConfig from './hackergptstream/config.content';
 
-
-export const HackerGPTProStream = async (
-  messages: Message[],
-) => {
+export const HackerGPTProStream = async (messages: Message[]) => {
   const openRouterUrl = `https://openrouter.ai/api/v1/chat/completions`;
   const openRouterHeaders = {
     Authorization: `Bearer ${process.env.SECRET_OPENROUTER_API_KEY}`,

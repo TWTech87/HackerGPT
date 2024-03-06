@@ -1,5 +1,5 @@
 import { useState, useContext, useRef } from 'react';
-import { IconBrandOpenai, IconBuildingStore } from '@tabler/icons-react';
+import { IconLock, IconBuildingStore } from '@tabler/icons-react';
 import { useTranslation } from 'next-i18next';
 
 import { RenderModuleBenefits } from '@/components/Chat/RenderModuleBenefits';
@@ -180,28 +180,14 @@ export const ModelSelect = () => {
                     ) : (
                       <HackerGPTSVG scale={0.1} />
                     )}
-                    <span className="truncate pr-1.5 text-sm font-medium md:pr-1.5">
+                    <span className="truncate text-sm font-medium">
                       {model.id === defaultModelId
                         ? `${model.name}`
                         : model.name}
                     </span>
                     {index === 1 && !isPremium && (
                       <div className="pr-2">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          fill="currentColor"
-                          aria-hidden="true"
-                          className="icon-sm group-hover/button:text-brand-purple -ml-2 ml-0.5 !text-gray-500 transition-colors group-hover/options:text-gray-500 sm:ml-0"
-                          width="16"
-                          height="16"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z"
-                            clipRule="evenodd"
-                          ></path>
-                        </svg>
+                        <IconLock color={'#6b7280'} size={18} strokeWidth={2} />
                       </div>
                     )}
                   </div>

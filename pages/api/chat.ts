@@ -261,9 +261,7 @@ const handler = async (req: Request): Promise<Response> => {
           isEnhancedSearchActive,
         );
       } else {
-        streamResult = await HackerGPTProStream(
-          messagesToSend,
-        );
+        streamResult = await HackerGPTProStream(messagesToSend);
       }
 
       return new Response(streamResult, {
